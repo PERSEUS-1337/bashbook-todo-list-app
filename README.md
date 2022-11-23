@@ -49,10 +49,19 @@ The project is a Flutter mobile application composed of a sign in, sign-up and a
 ### Project Schedule
 After the discussions in the laboratory, you are required to start with the project. Here is the table schedule with expected minimum output for the milestones. These milestones will be checked during lab hours. Each milestone is equivalent to 5 points for the project.
 
-| Date | Milestone  | Minimum Expected Output
+| Date | Milestone | Minimum Expected Output
 |--|--|--|
-| 21 Nov - 25 Nov | Milestone 01 | Create firebase, fetch/add information in firebase
+| 21 Nov - 25 Nov | Milestone 01 | Create firebase, fetch/add information in firebase |
+| 28 Nov - 02 Dec | Milestone 02 | UI and Navigation |
+| 05 Dec - 09 Dec | Milestone 03 | Add, Search, Todo |
+| 12 Dec - 14 Dec | Finalize Project
 
+### Project Deadline
+Here is the table for the point equivalents for each feature
+| # | Feature | Points
+|--|--|--|
+ | 1 | Signup, Login, Logout via Firebase |10 points
+ | 2 | Add, View, and Search Friends |30 points
 
 
 
@@ -70,3 +79,4 @@ After the discussions in the laboratory, you are required to start with the proj
 ### Unhappy paths
 
 # Resources
+- https://www.topcoder.com/thrive/articles/form-validation-in-flutter

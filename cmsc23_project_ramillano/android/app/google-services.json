@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "439740580389",
+    "project_id": "cmsc23-project-abramillano",
+    "storage_bucket": "cmsc23-project-abramillano.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439740580389:android:ffc1b9059c09030ac5f5cc",
+        "android_client_info": {
+          "package_name": "com.example.cmsc23_project_ramillano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439740580389-v08ak79rk3atkbp92elqeqva7q3hmbkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqERyZaJL8YJDeqccKtYNq2l8IUTWuyGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439740580389-v08ak79rk3atkbp92elqeqva7q3hmbkf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
