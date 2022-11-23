@@ -26,13 +26,17 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       controller: emailController,
       style: Constants.textStyleWhite,
       decoration: Constants.textFormEmail,
-      validator: ((emailController) {
-        if (isValidEmail(emailController!)) {
-          return null;
-        } else {
-          return "Enter valid email";
-        }
+       validator: ((emailController) {
+        if (emailController!.isEmpty) return "This field is required.";
+        return null;
       }),
+      // validator: ((emailController) {
+      //   if (isValidEmail(emailController!)) {
+      //     return null;
+      //   } else {
+      //     return "Enter valid email";
+      //   }
+      // }),
     );
 
     /// This is creating a text field with a controller and a decoration.
@@ -53,7 +57,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
             String retVal = await context.read<AuthProvider>().signIn(
-                emailController.text,
+                // emailController.text,
+                "${emailController.text}@${emailController.text}.com",
                 passwordController.text);
             // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(

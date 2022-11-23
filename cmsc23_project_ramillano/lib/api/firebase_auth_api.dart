@@ -39,7 +39,7 @@ class FirebaseAuthAPI {
       /// Assigning the result of the `signInWithEmailAndPassword` method to the `credential` variable.
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-       print(e.code);
+      print(e.code);
       return e.message!;
     } catch (e) {
       return "Unknown Error!";
@@ -59,15 +59,16 @@ class FirebaseAuthAPI {
   ///
   /// Returns:
   ///   A Future<String>
-  Future<String> signUp(
-      String email, String password, String firstName, String lastName) async {
+  Future<String> signUp(String email, String password, String name,
+      String birthdate, String location) async {
     UserCredential credential;
 
     try {
       credential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (credential.user != null) {
-        saveUserToFirestore(credential.user?.uid, email, firstName, lastName);
+        saveUserToFirestore(
+            credential.user?.uid, email, password, name, birthdate, location);
       }
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -88,14 +89,16 @@ class FirebaseAuthAPI {
   /// Args:
   ///   uid (String): The user's unique ID.
   ///   email (String): The email of the user
-  Future saveUserToFirestore(
-      String? uid, String email, String firstName, String lastName) async {
+  Future saveUserToFirestore(String? uid, email, String password, String name,
+      String birthdate, String location) async {
     try {
       await db.collection("users").doc(uid).set({
         "id": uid.toString(),
-        "email": email,
-        "firstName": firstName,
-        "lastName": lastName
+        "username": email,
+        "password": password,
+        "name": name,
+        "birthDate": birthdate,
+        "location": location
       });
     } on FirebaseException catch (e) {
       print(e.message);

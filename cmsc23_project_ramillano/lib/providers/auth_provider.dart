@@ -35,11 +35,11 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// It returns a Future that resolves to a String
-  /// 
+  ///
   /// Args:
   ///   email (String): The email address of the user.
   ///   password (String): The password of the user.
-  /// 
+  ///
   /// Returns:
   ///   A Future object.
   Future<String> signIn(String email, String password) async {
@@ -52,17 +52,17 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// It returns a Future that will eventually return a String
-  /// 
+  ///
   /// Args:
   ///   email (String): The email address of the user.
   ///   password (String): The password for the user.
   ///   firstName (String): The first name of the user.
   ///   lastName (String): The last name of the user.
-  /// 
+  ///
   /// Returns:
   ///   A Future<String>
-  Future<String> signUp (
-      String email, String password, String firstName, String lastName) async {
-    return await authService.signUp(email, password, firstName, lastName);
+  Future<String> signUp(String email, String password, String name,
+      String birthdate, String location) async {
+    return await authService.signUp(email, password, name, birthdate, location);
   }
 }

@@ -165,6 +165,15 @@ const textFormFirstName =
     InputDecoration(hintText: "First Name", hintStyle: textStyleWhite);
 const textFormLastName =
     InputDecoration(hintText: "Last Name", hintStyle: textStyleWhite);
+const textFormName =
+    InputDecoration(hintText: "Name", hintStyle: textStyleWhite);
+const textFormBirthDate =
+    InputDecoration(hintText: "Birth Date", hintStyle: textStyleWhite);
+const textFormLocation =
+    InputDecoration(hintText: "Location", hintStyle: textStyleWhite);
+const textFormUserName =
+    InputDecoration(hintText: "User Name", hintStyle: textStyleWhite);
+    
 // StreamBuilder errors
 const snapshotWaiting = Center(child: CircularProgressIndicator());
 const snapshotError = Center(child: CircularProgressIndicator());

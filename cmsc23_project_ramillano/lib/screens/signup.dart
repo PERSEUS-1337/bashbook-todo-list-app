@@ -12,29 +12,40 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> with InputValidationMixin {
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
+    // TextEditingController emailController = TextEditingController();
+    TextEditingController nameController = TextEditingController();
+    TextEditingController birthDateController = TextEditingController();
+    TextEditingController locationController = TextEditingController();
+    TextEditingController userNameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    TextEditingController firstNameController = TextEditingController();
-    TextEditingController lastNameController = TextEditingController();
 
     final _formKey = GlobalKey<FormState>();
 
-    /// Creating a text field with a controller and a decoration.
-    final email = TextFormField(
-      key: const Key('email'),
-      controller: emailController,
+    // final email = TextFormField(
+    //   key: const Key('email'),
+    //   controller: emailController,
+    //   style: Constants.textStyleWhite,
+    //   decoration: Constants.textFormEmail,
+    //   validator: ((emailController) {
+    //     if (isValidEmail(emailController!)) {
+    //       return null;
+    //     } else {
+    //       return "Enter valid email";
+    //     }
+    //   }),
+    // );
+
+    final userName = TextFormField(
+      key: const Key('username'),
+      controller: userNameController,
       style: Constants.textStyleWhite,
-      decoration: Constants.textFormEmail,
-      validator: ((emailController) {
-        if (isValidEmail(emailController!)) {
-          return null;
-        } else {
-          return "Enter valid email";
-        }
+      decoration: Constants.textFormUserName,
+      validator: ((userNameController) {
+        if (userNameController!.isEmpty) return "This field is required.";
+        return null;
       }),
     );
 
-    /// This is creating a text field with a controller and a decoration.
     final password = TextFormField(
       key: const Key('psWord'),
       controller: passwordController,
@@ -47,26 +58,35 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       }),
     );
 
-    /// This is creating a text field with a controller and a decoration.
-    final firstName = TextFormField(
-      key: const Key('firstName'),
-      controller: firstNameController,
+    final name = TextFormField(
+      key: const Key('name'),
+      controller: nameController,
       style: Constants.textStyleWhite,
-      decoration: Constants.textFormFirstName,
-      validator: ((firstNameController) {
-        if (firstNameController!.isEmpty) return "This field is required.";
+      decoration: Constants.textFormName,
+      validator: ((nameController) {
+        if (nameController!.isEmpty) return "This field is required.";
         return null;
       }),
     );
 
-    /// This is creating a text field with a controller and a decoration.
-    final lastName = TextFormField(
-      key: const Key('lastName'),
-      controller: lastNameController,
+    final birthDate = TextFormField(
+      key: const Key('birthDate'),
+      controller: birthDateController,
       style: Constants.textStyleWhite,
-      decoration: Constants.textFormLastName,
-      validator: ((lastNameController) {
-        if (lastNameController!.isEmpty) return "This field is required.";
+      decoration: Constants.textFormBirthDate,
+      validator: ((birthDateController) {
+        if (birthDateController!.isEmpty) return "This field is required.";
+        return null;
+      }),
+    );
+
+    final location = TextFormField(
+      key: const Key('location'),
+      controller: locationController,
+      style: Constants.textStyleWhite,
+      decoration: Constants.textFormLocation,
+      validator: ((locationController) {
+        if (locationController!.isEmpty) return "This field is required.";
         return null;
       }),
     );
@@ -76,10 +96,12 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           String retVal = await context.read<AuthProvider>().signUp(
-              emailController.text,
-              passwordController.text,
-              firstNameController.text,
-              lastNameController.text);
+                "${userNameController.text}@${userNameController.text}.com",
+                passwordController.text,
+                nameController.text,
+                birthDateController.text,
+                locationController.text,
+              );
           // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(retVal),
@@ -113,10 +135,11 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
             padding: const EdgeInsets.only(left: 40.0, right: 40.0),
             children: <Widget>[
               Constants.textSignUpPage,
-              email,
+              userName,
               password,
-              firstName,
-              lastName,
+              name,
+              birthDate,
+              location,
               signupButton,
               backButton
             ],
