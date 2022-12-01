@@ -1,3 +1,4 @@
+import 'package:cmsc23_project_ramillano/models/user_model.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,6 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> with InputValidationMixin {
   @override
   Widget build(BuildContext context) {
-    // TextEditingController emailController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController birthDateController = TextEditingController();
     TextEditingController locationController = TextEditingController();
@@ -20,20 +20,6 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
     TextEditingController passwordController = TextEditingController();
 
     final _formKey = GlobalKey<FormState>();
-
-    // final email = TextFormField(
-    //   key: const Key('email'),
-    //   controller: emailController,
-    //   style: Constants.textStyleWhite,
-    //   decoration: Constants.textFormEmail,
-    //   validator: ((emailController) {
-    //     if (isValidEmail(emailController!)) {
-    //       return null;
-    //     } else {
-    //       return "Enter valid email";
-    //     }
-    //   }),
-    // );
 
     final userName = TextFormField(
       key: const Key('username'),
@@ -95,6 +81,18 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       key: const Key('signupButton'),
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
+          // User temp = User(
+          //   id: '', 
+          //   userName: '${userNameController.text}@${userNameController.text}.com',
+          //   displayName: nameController.text,
+          //   password: passwordController.text, 
+          //   birthDate: birthDateController.text, 
+          //   location: locationController.text,
+          // )
+          // String retVal = await context.read<AuthProvider>().signUp(temp, 
+          //   "${userNameController.text}@${userNameController.text}.com",
+          //   passwordController.text
+          // );
           String retVal = await context.read<AuthProvider>().signUp(
                 "${userNameController.text}@${userNameController.text}.com",
                 passwordController.text,

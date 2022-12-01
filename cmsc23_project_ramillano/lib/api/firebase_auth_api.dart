@@ -84,21 +84,19 @@ class FirebaseAuthAPI {
     auth.signOut();
   }
 
-  /// It saves the user to firestore.
-  ///
-  /// Args:
-  ///   uid (String): The user's unique ID.
-  ///   email (String): The email of the user
-  Future saveUserToFirestore(String? uid, email, String password, String name,
+  Future saveUserToFirestore(String? uid, String userName, String password, String name,
       String birthdate, String location) async {
     try {
       await db.collection("users").doc(uid).set({
         "id": uid.toString(),
-        "username": email,
+        "userName": userName,
         "password": password,
-        "name": name,
+        "displayName": name,
         "birthDate": birthdate,
-        "location": location
+        "location": location,
+        "friends": [],
+        "receivedFriendRequests": [],
+        "sentFriendRequest": [],
       });
     } on FirebaseException catch (e) {
       print(e.message);

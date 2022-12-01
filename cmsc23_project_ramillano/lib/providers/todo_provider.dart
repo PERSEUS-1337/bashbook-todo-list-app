@@ -1,9 +1,3 @@
-/*
-  Created by: Claizel Coubeili Cepe
-  Date: 27 October 2022
-  Description: Sample todo app with networking
-*/
-
 import 'package:cmsc23_project_ramillano/api/firebase_todo_api.dart';
 import 'package:cmsc23_project_ramillano/models/todo_model.dart';
 import 'package:flutter/material.dart';

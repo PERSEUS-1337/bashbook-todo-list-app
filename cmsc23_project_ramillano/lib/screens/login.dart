@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       key: const Key('email'),
       controller: emailController,
       style: Constants.textStyleWhite,
-      decoration: Constants.textFormEmail,
+      decoration: Constants.textFormUserName,
        validator: ((emailController) {
         if (emailController!.isEmpty) return "This field is required.";
         return null;
