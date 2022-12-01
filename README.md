@@ -80,3 +80,4 @@ Here is the table for the point equivalents for each feature
 
 # Resources
 - https://www.topcoder.com/thrive/articles/form-validation-in-flutter
+- https://firebase.flutter.dev/docs/auth/usage/

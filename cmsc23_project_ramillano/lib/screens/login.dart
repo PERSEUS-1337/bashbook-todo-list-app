@@ -30,13 +30,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
         if (emailController!.isEmpty) return "This field is required.";
         return null;
       }),
-      // validator: ((emailController) {
-      //   if (isValidEmail(emailController!)) {
-      //     return null;
-      //   } else {
-      //     return "Enter valid email";
-      //   }
-      // }),
     );
 
     /// This is creating a text field with a controller and a decoration.

@@ -145,10 +145,8 @@ class _MainPageState extends State<MainPage> {
             ListTile(
               title: Constants.textButtonLogout,
               onTap: () {
-                var status = context.read<AuthProvider>().signOut();
-                print("Status:\t${status.}");
+                context.read<AuthProvider>().signOut();
                 Navigator.pop(context);
-                // setState(() {});
               },
             ),
           ])),
