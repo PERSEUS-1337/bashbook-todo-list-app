@@ -19,6 +19,7 @@ class FirebaseUserAPI {
 
   /// It returns a stream of all the users in the database.
   Stream<QuerySnapshot> getAllUsers() {
+    print(currentUser?.uid);
     return db
         .collection('users')
         .where('id', isNotEqualTo: currentUser?.uid)

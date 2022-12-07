@@ -7,14 +7,14 @@
 import 'dart:convert';
 
 class Todo {
-  final int userId;
-  String? id;
+  String userId;
+  String id;
   String title;
   bool completed;
 
   Todo({
     required this.userId,
-    this.id,
+    required this.id,
     required this.title,
     required this.completed,
   });
@@ -37,6 +37,7 @@ class Todo {
   Map<String, dynamic> toJson(Todo todo) {
     return {
       'userId': todo.userId,
+      'id': todo.id,
       'title': todo.title,
       'completed': todo.completed,
     };

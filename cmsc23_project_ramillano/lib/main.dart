@@ -18,7 +18,7 @@ void main() async {
    runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: ((context) => TodoListProvider())),
+        ChangeNotifierProvider(create: ((context) => TodoListProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
         ChangeNotifierProvider(create: ((context) => ListProvider())),
       ],
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {'/': (context) => const AuthWrapper()},
       theme: ThemeData(
-        primarySwatch: Colors.lime,
+        primarySwatch: Colors.deepPurple,
       ),
     );
   }
@@ -51,6 +51,7 @@ class AuthWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Checking if the user is authenticated. If the user is authenticated, it will return the TodoPage. If not, it will return the LoginPage.
     if (context.watch<AuthProvider>().isAuthenticated) {
+      // return const MainPage();
       return const MainPage();
     } else {
       return const LoginPage();

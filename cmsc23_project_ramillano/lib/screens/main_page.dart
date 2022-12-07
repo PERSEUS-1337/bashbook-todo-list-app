@@ -2,7 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
+import 'package:cmsc23_project_ramillano/screens/login.dart';
 import 'package:cmsc23_project_ramillano/screens/modal_show_list.dart';
+import 'package:cmsc23_project_ramillano/screens/todo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project_ramillano/models/user_model.dart';
@@ -17,10 +19,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   Widget _buildUser(BuildContext context) {
     // MainUserStream returns a stream of the main user (in this case, only 1 item) that will be used as the main user for the program in which to add, accept, reject and unfriend users
-    Stream<QuerySnapshot> mainUserStream = context.watch<ListProvider>().mainUser;
+    Stream<QuerySnapshot> mainUserStream =
+        context.watch<ListProvider>().mainUser;
 
     // Returned to the main page called
     return Scaffold(
@@ -36,7 +38,8 @@ class _MainPageState extends State<MainPage> {
             return Constants.snapshotNoData;
           }
 
-          User user = User.fromJson(snapshot.data?.docs[0].data() as Map<String, dynamic>);
+          User user = User.fromJson(
+              snapshot.data?.docs[0].data() as Map<String, dynamic>);
 
           return Container(
             decoration: Constants.blackBoxDecor,
@@ -47,52 +50,60 @@ class _MainPageState extends State<MainPage> {
               children: [
                 // DisplayName
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: Text(
-                    style: Constants.textStyleDisplayNameMain,
-                    "> ${user.displayName};"
-                  ),
+                      style: Constants.textStyleDisplayNameMain,
+                      "> ${user.displayName};"),
                 ),
                 // UserName
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: Text(
-                    style: Constants.textStyleUserName,
-                    "\$ ${user.userName};"
-                  ),
+                      style: Constants.textStyleUserName,
+                      "\$ ${user.userName};"),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                      style: Constants.textStyleYellow,
+                      "\$ ls ./profile/location; ${user.birthDate};"),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                      style: Constants.textStyleYellow,
+                      "\$ ls ./profile/location; ${user.location};"),
                 ),
                 // Amount of friends
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: Text(
-                    style: Constants.textStyleWhite,
-                    "\$ ls ./profile/friends | wc -l; > ${user.friends?.length};"
-                  ),
+                      style: Constants.textStyleWhite,
+                      "\$ ls ./profile/friends | wc -l; > ${user.friends?.length};"),
                 ),
                 // Amount of received friend requests
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: Text(
-                    style: Constants.textStyleWhite,
-                    "\$ ls ./profile/pending_friend_requests | wc -l; > ${user.receivedFriendRequests?.length};"
-                  ),
+                      style: Constants.textStyleWhite,
+                      "\$ ls ./profile/pending_friend_requests | wc -l; > ${user.receivedFriendRequests?.length};"),
                 ),
                 // Amount of sent friend requests
                 TextButton(
-                  onPressed: () {}, 
+                  onPressed: () {},
                   child: Text(
-                    style: Constants.textStyleWhite,
-                    "\$ ls ./profile/sent_friend_requests | wc -l; > ${user.sentFriendRequest?.length}"
-                  ),
+                      style: Constants.textStyleWhite,
+                      "\$ ls ./profile/sent_friend_requests | wc -l; > ${user.sentFriendRequest?.length}"),
                 ),
                 // Button - see users
                 TextButton(
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => ShowListModal(type: 'user'),
+                      builder: (BuildContext context) =>
+                          ShowListModal(type: 'user'),
                     );
-                  }, 
+                  },
                   child: Constants.textSeeUsers,
                 ),
                 // Button - see friends
@@ -100,9 +111,11 @@ class _MainPageState extends State<MainPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => ShowListModal(type: 'friend',),
+                      builder: (BuildContext context) => ShowListModal(
+                        type: 'friend',
+                      ),
                     );
-                  }, 
+                  },
                   child: Constants.textViewFriend,
                 ),
                 // Button - see requests
@@ -110,20 +123,23 @@ class _MainPageState extends State<MainPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => ShowListModal(type: 'request',),
+                      builder: (BuildContext context) => ShowListModal(
+                        type: 'request',
+                      ),
                     );
-                  }, 
+                  },
                   child: Constants.textSeeFR,
                 ),
                 TextButton(
                   onPressed: () {
                     showDialog(
-                      context: context,
-                      builder: (BuildContext context) => 
-                      const Center(
-                        child: Text(style: Constants.textStyleErrorCode, "> error (code 69): feature not working yet\n \$ 'tap anywhere outside the text to go back'"),)
-                    );
-                  }, 
+                        context: context,
+                        builder: (BuildContext context) => const Center(
+                              child: Text(
+                                  style: Constants.textStyleErrorCode,
+                                  "> error (code 69): feature not working yet\n \$ 'tap anywhere outside the text to go back'"),
+                            ));
+                  },
                   child: Constants.textSearchFriend,
                 ),
               ],
@@ -133,23 +149,54 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-  
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.black87,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.black87,
+            ),
+            child: Text('Drawer Header'),
+          ),
+          ListTile(
+            title: Constants.textButtonTodo,
+            onTap: () {
+              Navigator.pop(context);
+              // Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TodoPage()),
+              );
+              setState(() {});
+            },
+          ),
+          ListTile(
+            title: Constants.textButtonLogout,
+            onTap: () {
+              context.read<AuthProvider>().signOut();
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+              setState(() {});
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Constants.mainPageAppBar,
       backgroundColor: Colors.black,
-      drawer: Drawer(
-          backgroundColor: Colors.black87,
-          child: ListView(padding: EdgeInsets.zero, children: [
-            ListTile(
-              title: Constants.textButtonLogout,
-              onTap: () {
-                context.read<AuthProvider>().signOut();
-                Navigator.pop(context);
-              },
-            ),
-          ])),
+      drawer: _buildDrawer(context),
       body: _buildUser(context),
     );
   }

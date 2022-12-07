@@ -57,11 +57,18 @@ After the discussions in the laboratory, you are required to start with the proj
 | 12 Dec - 14 Dec | Finalize Project
 
 ### Project Deadline
+The deadline for the project is on December 14, 2022, Wednesday. All changes after the said
+date will not be considered.
+The start of the project presentation is on December 15,2022untilDecember21,2022,during
+laboratory hours.
+
+### Project Grading Scale
 Here is the table for the point equivalents for each feature
 | # | Feature | Points
 |--|--|--|
- | 1 | Signup, Login, Logout via Firebase |10 points
- | 2 | Add, View, and Search Friends |30 points
+ | 1 | Signup, Login, Logout via Firebase | 10 points
+ | 2 | Add, View, and Search Friends | 30 points
+ | 3 | Shared Todo List | 25 points
 
 
 
@@ -81,3 +88,8 @@ Here is the table for the point equivalents for each feature
 # Resources
 - https://www.topcoder.com/thrive/articles/form-validation-in-flutter
 - https://firebase.flutter.dev/docs/auth/usage/
+- https://blog.logrocket.com/how-to-add-navigation-drawer-flutter/#:~:text=The%20navigation%20drawer%20in%20Flutter,icon%20in%20the%20app%20bar.
+- https://www.kindacode.com/snippet/dart-how-to-update-a-map/
+- https://stackoverflow.com/questions/59268817/flutter-how-to-remove-a-specific-array-data-in-firebase#:~:text=Firestore%20does%20not%20provide%20a,to%20make%20the%20update%20atomic.
+- https://firebase.flutter.dev/docs/firestore/usage/
+- https://stackoverflow.com/questions/51400549/how-to-wrap-a-streambuilder-class-with-a-column-or-listview-class-in-flutter

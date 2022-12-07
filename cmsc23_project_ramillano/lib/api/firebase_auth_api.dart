@@ -81,11 +81,11 @@ class FirebaseAuthAPI {
 
   /// It signs out the user.
   Future signOut() async {
-    auth.signOut();
+    await auth.signOut();
   }
 
-  Future saveUserToFirestore(String? uid, String userName, String password, String name,
-      String birthdate, String location) async {
+  Future saveUserToFirestore(String? uid, String userName, String password,
+      String name, String birthdate, String location) async {
     try {
       await db.collection("users").doc(uid).set({
         "id": uid.toString(),
@@ -97,6 +97,7 @@ class FirebaseAuthAPI {
         "friends": [],
         "receivedFriendRequests": [],
         "sentFriendRequest": [],
+        "todoList": [],
       });
     } on FirebaseException catch (e) {
       print(e.message);

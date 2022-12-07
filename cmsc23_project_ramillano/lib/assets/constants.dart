@@ -19,8 +19,9 @@ const hoverColor = Color.fromARGB(255, 0, 0, 0);
 
 /// A constant variable that is used to style the app bar.
 AppBar mainPageAppBar = AppBar(
-  backgroundColor: Colors.lightGreenAccent,
-  title: const Text(style: textStyleAppBar, "\$ <bash_book\>™;"),
+  iconTheme: const IconThemeData(color: Colors.white, shadows: appBarShadow),
+  backgroundColor: Colors.black,
+  title: const Text(style: textStyleWhite, "\$ <bash_book\>™;"),
 );
 AppBar userListAppBar = AppBar(
   iconTheme: const IconThemeData(
@@ -50,7 +51,6 @@ const appBarShadow = <Shadow>[
       offset: Offset(0.0, 0.0), blurRadius: neonBlurRadius, color: Colors.white)
 ];
 
-
 /// A constant variable that is used to style text.
 // Specific Text Styles for Specific Texts
 const textStyleDisplayNameMain =
@@ -74,11 +74,11 @@ const textStyleUserName =
       blurRadius: neonBlurRadius,
       color: userNameColorAccent)
 ]);
-const textStyleAppBar = TextStyle(color: Colors.black, shadows: <Shadow>[
+const textStyleAppBar = TextStyle(color: Colors.white, shadows: <Shadow>[
   Shadow(
       offset: Offset(0.0, 0.0),
       blurRadius: neonBlurRadiusMain,
-      color: Colors.black)
+      color: Colors.white)
 ]);
 const textStyleErrorCode =
     TextStyle(color: Colors.redAccent, fontSize: 20, shadows: <Shadow>[
@@ -109,7 +109,9 @@ const textStyleWhite = TextStyle(color: Colors.white, shadows: <Shadow>[
 ]);
 const textStyleTeal = TextStyle(color: Colors.tealAccent, shadows: <Shadow>[
   Shadow(
-      offset: Offset(0.0, 0.0), blurRadius: neonBlurRadius, color: Colors.white)
+      offset: Offset(0.0, 0.0),
+      blurRadius: neonBlurRadius,
+      color: Colors.tealAccent)
 ]);
 const textStyleRed = TextStyle(color: Colors.redAccent, shadows: <Shadow>[
   Shadow(
@@ -127,7 +129,19 @@ const textStyleOrange = TextStyle(color: Colors.orangeAccent, shadows: <Shadow>[
   Shadow(
       offset: Offset(0.0, 0.0),
       blurRadius: neonBlurRadius,
-      color: Colors.greenAccent)
+      color: Colors.orangeAccent)
+]);
+const textStyleYellow = TextStyle(color: Colors.amberAccent, shadows: <Shadow>[
+  Shadow(
+      offset: Offset(0.0, 0.0),
+      blurRadius: neonBlurRadius,
+      color: Colors.orangeAccent)
+]);
+const textStylePink = TextStyle(color: Colors.pinkAccent, shadows: <Shadow>[
+  Shadow(
+      offset: Offset(0.0, 0.0),
+      blurRadius: neonBlurRadius,
+      color: Colors.pinkAccent)
 ]);
 const textStyleBlack = TextStyle(color: Colors.black, shadows: <Shadow>[
   Shadow(
@@ -138,6 +152,9 @@ const textStyleBlack = TextStyle(color: Colors.black, shadows: <Shadow>[
 const textLoginPage = Text(style: textStyleLoginPage, "\$ ./screen/login ...");
 const textSignUpPage =
     Text(style: textStyleSignUpPage, "\$ ./screen/signup ...");
+const textTodosUser =
+    Text(style: textStyleWhite, "\$ ./profile/todos/user ...");
+const textTodosAll = Text(style: textStyleWhite, "\$ ./profile/todos/all ...");
 
 const textSeeUsers = Text(style: textStyleTeal, "\$ Press to see ./users ...");
 const textAddFriend =
@@ -149,13 +166,17 @@ const textSeeFR =
 const textSearchFriend =
     Text(style: textStyleTeal, "\$ Press to search for \${user.friend} ...");
 
+const textButtonEdit = Text(style: textStyleOrange, ">>> Edit");
 const textButtonRemove = Text(style: textStyleRed, ">>> Remove");
 const textButtonAccept = Text(style: textStyleGreen, ">>> Accept");
 const textButtonAdd = Text(style: textStyleOrange, ">>> Add friend");
 const textButtonLogin = Text(style: textStyleRed, ">>> Login");
-const textButtonLogout = Text(style: textStyleRed, ">>> Logout");
+const textButtonLogout =
+    Text(textScaleFactor: 1.5, style: textStyleRed, ">>> Logout");
 const textButtonSignUp = Text(style: textStyleGreen, ">>> Sign Up");
 const textButtonBack = Text(style: textStyleRed, ">>> Back");
+const textButtonTodo = Text(textScaleFactor: 1.5, style: textStylePink, ">>> TodoList");
+const textButtonUserProfile = Text(textScaleFactor: 1.5, style: textStylePink, ">>> UserProfile");
 
 const textFormEmail =
     InputDecoration(hintText: "Email", hintStyle: textStyleWhite);
@@ -173,7 +194,7 @@ const textFormLocation =
     InputDecoration(hintText: "Location", hintStyle: textStyleWhite);
 const textFormUserName =
     InputDecoration(hintText: "User Name", hintStyle: textStyleWhite);
-    
+
 // StreamBuilder errors
 const snapshotWaiting = Center(child: CircularProgressIndicator());
 const snapshotError = Center(child: CircularProgressIndicator());

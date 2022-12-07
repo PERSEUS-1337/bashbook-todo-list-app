@@ -48,6 +48,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
     final loginButton = TextButton(
       key: const Key('loginButton'),
       onPressed: () async {
+        
         if (_formKey.currentState!.validate()) {
             String retVal = await context.read<AuthProvider>().signIn(
                 // emailController.text,

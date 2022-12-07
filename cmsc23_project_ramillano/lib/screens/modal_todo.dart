@@ -20,7 +20,7 @@ class TodoModal extends StatelessWidget {
   });
 
   // Method to show the title of the modal depending on the functionality
-  Text _buildTitle() {
+  Text _buildTitle(String type) {
     switch (type) {
       case 'Add':
         return const Text("Add new todo");
@@ -34,7 +34,7 @@ class TodoModal extends StatelessWidget {
   }
 
   // Method to build the content or body depending on the functionality
-  Widget _buildContent(BuildContext context) {
+  Widget _buildContent(BuildContext context, String type) {
     // Use context.read to get the last updated list of todos
     // List<Todo> todoItems = context.read<TodoListProvider>().todo;
 
@@ -46,6 +46,14 @@ class TodoModal extends StatelessWidget {
           );
         }
       // Edit and add will have input field in them
+      case 'Edit':
+        return TextField(
+          controller: _formFieldController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            // hintText: todoIndex != -1 ? todoItems[todoIndex].title : '',
+          ),
+        );
       default:
         return TextField(
           controller: _formFieldController,
@@ -57,7 +65,7 @@ class TodoModal extends StatelessWidget {
     }
   }
 
-  TextButton _dialogAction(BuildContext context) {
+  TextButton _dialogAction(BuildContext context, String type) {
     // List<Todo> todoItems = context.read<TodoListProvider>().todo;
 
     return TextButton(
@@ -67,9 +75,10 @@ class TodoModal extends StatelessWidget {
             {
               // Instantiate a todo objeect to be inserted, default userID will be 1, the id will be the next id in the list
               Todo temp = Todo(
-                  userId: 1,
+                  userId: "1",
                   completed: false,
-                  title: _formFieldController.text);
+                  title: _formFieldController.text,
+                  id: '');
 
               context.read<TodoListProvider>().addTodo(temp);
 
@@ -77,16 +86,16 @@ class TodoModal extends StatelessWidget {
               Navigator.of(context).pop();
               break;
             }
-          // case 'Edit':
-          //   {
-          //     context
-          //         .read<TodoListProvider>()
-          //         .editTodo(todoIndex, _formFieldController.text);
+          case 'Edit':
+            {
+              context
+                  .read<TodoListProvider>()
+                  .editTodo(_formFieldController.text);
 
-          //     // Remove dialog after editing
-          //     Navigator.of(context).pop();
-          //     break;
-          //   }
+              // Remove dialog after editing
+              Navigator.of(context).pop();
+              break;
+            }
           case 'Delete':
             {
               context.read<TodoListProvider>().deleteTodo();
@@ -107,12 +116,12 @@ class TodoModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: _buildTitle(),
-      content: _buildContent(context),
+      title: _buildTitle(type),
+      content: _buildContent(context, type),
 
       // Contains two buttons - add/edit/delete, and cancel
       actions: <Widget>[
-        _dialogAction(context),
+        _dialogAction(context, type),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();

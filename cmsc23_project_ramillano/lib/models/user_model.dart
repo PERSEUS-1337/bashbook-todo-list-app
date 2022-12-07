@@ -11,6 +11,7 @@ class User {
   List? friends = [];
   List? receivedFriendRequests = [];
   List? sentFriendRequest = [];
+  List? todoList = [];
 
   // Constructor for the friend model
   User({
@@ -23,6 +24,7 @@ class User {
     this.friends,
     this.receivedFriendRequests,
     this.sentFriendRequest,
+    this.todoList,
   });
 
   // This returns an instance of a class that is in User format, from json
@@ -37,6 +39,7 @@ class User {
       friends: json['friends'],
       receivedFriendRequests: json['receivedFriendRequests'],
       sentFriendRequest: json['sentFriendRequest'],
+      todoList: json['todoList'],
     );
   }
 
@@ -57,6 +60,7 @@ class User {
       'friends': user.friends,
       'receivedFriendRequests': user.receivedFriendRequests,
       'sentFriendRequest': user.sentFriendRequest,
+      'todoList': user.todoList,
     };
   }
 }
