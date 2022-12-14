@@ -89,6 +89,8 @@ I implemented a way to reuse the code in such a way that it uses switch cases to
 I used the same philosophy when implementing my todopage. Same style for the main user and the other user's todo, with just adjustments to whether or not it is a user's todo or another's todo.
 
 Another thing is that, for my firebase Api's, providers, it is where the magic happens too since clever querying and usage of flutter Bases features helped me achieve the features that I thought was impossible, or very complicated to deal with in the future. Especially the filtering of the users, firebase's commands came in clutch
+
+I created a constants file which is imported to almost all the files that is needed in code so that they could have a standard piece of either text buttons, design, styles, that is easier to manipulate and keep track of since it is also repetitive throughout the app
 ## Challenges faced when developing the app
 Particularly the search. It is hard for me to wrap my head around how to return a certain user using a search query. It may have been because of time pressure also.
 Second, it was hard for me to try and implement the "users" page that excludes people that is already added or had a friend request sent already.
