@@ -66,7 +66,7 @@ class _MainPageState extends State<MainPage> {
                   onPressed: () {},
                   child: Text(
                       style: Constants.textStyleYellow,
-                      "\$ ls ./profile/location; ${user.birthDate};"),
+                      "\$ ls ./profile/birthdate; ${user.birthDate};"),
                 ),
                 TextButton(
                   onPressed: () {},
@@ -137,7 +137,7 @@ class _MainPageState extends State<MainPage> {
                         builder: (BuildContext context) => const Center(
                               child: Text(
                                   style: Constants.textStyleErrorCode,
-                                  "> error (code 69): feature not working yet\n \$ 'tap anywhere outside the text to go back'"),
+                                  "> error (code 404): feature not working yet\n \$ 'tap anywhere outside the text to go back'"),
                             ));
                   },
                   child: Constants.textSearchFriend,
@@ -166,7 +166,6 @@ class _MainPageState extends State<MainPage> {
             title: Constants.textButtonTodo,
             onTap: () {
               Navigator.pop(context);
-              // Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const TodoPage()),
@@ -179,10 +178,6 @@ class _MainPageState extends State<MainPage> {
             onTap: () {
               context.read<AuthProvider>().signOut();
               Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
               setState(() {});
             },
           ),
@@ -197,7 +192,33 @@ class _MainPageState extends State<MainPage> {
       appBar: Constants.mainPageAppBar,
       backgroundColor: Colors.black,
       drawer: _buildDrawer(context),
-      body: _buildUser(context),
+      body: Column(
+        children: [
+          Flexible(
+            child: _buildUser(context),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: const Text(
+                style: Constants.textStyleWhite,
+                "\$ Please do shift+R on console if user is not updated upon login. Bug still not solveable after 1 week..."),
+          ),
+          const Divider(
+            color: Colors.white,
+            thickness: 2.00,
+          ),
+          TextButton(
+            onPressed: () {},
+            child: const Text(
+                style: Constants.textStyleBlue,
+                "\$ Made by: PERSEUS-1337;\nAron Resty Ramillano - D3L"),
+          ),
+          const Divider(
+            color: Colors.white,
+            thickness: 2.00,
+          ),
+        ],
+      ),
     );
   }
 }

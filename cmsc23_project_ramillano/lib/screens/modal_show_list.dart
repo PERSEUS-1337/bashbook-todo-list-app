@@ -7,12 +7,11 @@ import 'package:cmsc23_project_ramillano/assets/constants.dart' as Constants;
 
 class ShowListModal extends StatefulWidget {
   String type;
-  ShowListModal({super.key,  required this.type});
+  ShowListModal({super.key, required this.type});
 
   @override
   State<ShowListModal> createState() => _ShowListModalState();
 }
-
 
 class _ShowListModalState extends State<ShowListModal> {
   Widget _buildContent(BuildContext context) {
@@ -34,10 +33,6 @@ class _ShowListModalState extends State<ShowListModal> {
         listStream = context.watch<ListProvider>().receivedFriendRequests;
         currentAppBar = Constants.requestListAppBar;
         break;
-      case 'search':
-        listStream = context.watch<ListProvider>().searchedFriend;
-        currentAppBar = Constants.requestListAppBar;
-        break;
     }
 
     return Scaffold(
@@ -53,48 +48,26 @@ class _ShowListModalState extends State<ShowListModal> {
           } else if (!snapshot.hasData) {
             return Constants.snapshotNoData;
           }
-          
+
           /// Creating a list of items from the data that is returned from the stream.
           return ListView.builder(
-            itemCount: snapshot.data?.docs.length, // This returns how many documents there are
+            shrinkWrap: true,
+            itemCount: (snapshot.data?.docs
+                .length), // This returns how many documents there are
             itemBuilder: ((context, index) {
-              User user = User.fromJson(snapshot.data?.docs[index].data() as Map<String, dynamic>);
-              if (widget.type == 'user') {
-                List temp = user.friends as List<dynamic>;
-                if (user.friends != null) {
-                  if (!temp.contains("9mxC9IiSmA5KOlwzHzeI")) {
-                    return InkWell(
-                        splashColor: Constants.splashColor,
-                        hoverColor: Constants.hoverColor,
-                        onTap: () {},
-                        child: Container(
-                          width: double.infinity,
-                          alignment: Alignment.topLeft,
-                          padding: const EdgeInsets.all(5),
-                          child: _buildDetails(context, user)
-                        ),
-                      // ),
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                } else {
-                  return const SizedBox();
-                }
-              } else {
-                return InkWell(
-                    splashColor: Constants.splashColor,
-                    hoverColor: Constants.hoverColor,
-                    onTap: () {},
-                    child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.all(5),
-                      child: _buildDetails(context, user)
-                    ),
-                  // ),
-                );
-              }
+              User user = User.fromJson(
+                  snapshot.data?.docs[index].data() as Map<String, dynamic>);
+              return InkWell(
+                splashColor: Constants.splashColor,
+                hoverColor: Constants.hoverColor,
+                onTap: () {},
+                child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.all(5),
+                    child: _buildDetails(context, user)),
+                // ),
+              );
             }),
           );
         },
@@ -102,14 +75,24 @@ class _ShowListModalState extends State<ShowListModal> {
     );
   }
 
-  Widget _buildDetails (BuildContext context, User user) {
+  Widget _buildDetails(BuildContext context, User user) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(style: Constants.textStyleWhite, "\$ id > ${user.id};"),
-        Text(style: Constants.textStyleUserName,"\$ uName > ${user.userName};"),
-        Text(style: Constants.textStyleDisplayName,"\$ dName > ${user.displayName};"),
+        Text(style: Constants.textStyleDisplayName, "\$ id > ${user.id};"),
+        // Text(
+        //     style: Constants.textStyleUserName, "\$ uName > ${user.userName};"),
+        Text(
+            style: Constants.textStyleWhite,
+            "\$ dName > ${user.displayName};"),
+        Text(
+            style: Constants.textStyleTeal,
+            "\$ bDate > ${user.birthDate};"),
+        Text(
+            style: Constants.textStyleTeal,
+            "\$ location > ${user.location};"),
         _buildButtons(context, user)
       ],
     );
@@ -120,43 +103,44 @@ class _ShowListModalState extends State<ShowListModal> {
       // Only render accept and reject if it is a request list, else ignore
       children: [
         if (widget.type == 'friend' || widget.type == 'request')
-        TextButton(
-          onPressed: () {
-            context.read<ListProvider>().changeSelectedUser(user);
-            if (widget.type == 'friend') {
-              context.read<ListProvider>().removeFriendFromUser(Constants.mainUserId, user.id);
-            } else {
-              context.read<ListProvider>().rejectFriendRequest(Constants.mainUserId, user.id);
-            }
-          }, 
-          child: Constants.textButtonRemove
-        ),
+          TextButton(
+              onPressed: () {
+                context.read<ListProvider>().changeSelectedUser(user);
+                if (widget.type == 'friend') {
+                  context.read<ListProvider>().removeFriendFromUser(user.id);
+                } else {
+                  context.read<ListProvider>().rejectFriendRequest(user.id);
+                }
+              },
+              child: Constants.textButtonRemove),
         if (widget.type == 'request')
-        TextButton(
-          onPressed: () {
-            context.read<ListProvider>().changeSelectedUser(user);
-            context.read<ListProvider>().acceptFriendRequest(Constants.mainUserId, user.id);
-            Navigator.of(context).pop();
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => ShowListModal(type: 'request',),
-            );
-          }, 
-          child: Constants.textButtonAccept
-        ),
+          TextButton(
+              onPressed: () {
+                context.read<ListProvider>().changeSelectedUser(user);
+                context.read<ListProvider>().acceptFriendRequest(user.id);
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => ShowListModal(
+                    type: 'request',
+                  ),
+                );
+              },
+              child: Constants.textButtonAccept),
         if (widget.type == 'user')
-        TextButton(
-          onPressed: () {
-            context.read<ListProvider>().changeSelectedUser(user);
-            context.read<ListProvider>().addUserAsFriend(Constants.mainUserId, user.id);
-            Navigator.of(context).pop();
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => ShowListModal(type: 'request',),
-            );
-          }, 
-          child: Constants.textButtonAdd
-        ),
+          TextButton(
+              onPressed: () {
+                context.read<ListProvider>().changeSelectedUser(user);
+                context.read<ListProvider>().addUserAsFriend(user.id);
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => ShowListModal(
+                    type: 'user',
+                  ),
+                );
+              },
+              child: Constants.testButtonAddFriend),
       ],
     );
   }
@@ -166,7 +150,13 @@ class _ShowListModalState extends State<ShowListModal> {
     return AlertDialog(
       contentPadding: const EdgeInsets.all(10),
       backgroundColor: Colors.black,
-      content: _buildContent(context),
+      content: Column(
+        children: [
+          Flexible(
+            child: _buildContent(context),
+          ),
+        ],
+      ),
     );
   }
 }

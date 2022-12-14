@@ -1,6 +1,7 @@
 import 'package:cmsc23_project_ramillano/models/user_model.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project_ramillano/assets/constants.dart' as Constants;
 
@@ -39,7 +40,8 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       style: Constants.textStyleWhite,
       decoration: Constants.textFormPassword,
       validator: ((passwordController) {
-        if (passwordController!.isEmpty) return "This field is required";
+        if (!validateStructure(passwordController!))
+          return "Password is weak. Try a new one";
         return null;
       }),
     );
@@ -56,14 +58,39 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
     );
 
     final birthDate = TextFormField(
-      key: const Key('birthDate'),
       controller: birthDateController,
       style: Constants.textStyleWhite,
-      decoration: Constants.textFormBirthDate,
-      validator: ((birthDateController) {
-        if (birthDateController!.isEmpty) return "This field is required.";
-        return null;
-      }),
+      decoration:
+          Constants.textFormBirthDate, //editing controller of this TextField
+      // decoration: const InputDecoration(
+      //     icon: Icon(Icons.calendar_today), //icon of text field
+      //     labelText: "Enter Date" //label text of field
+      //     ),
+      readOnly: true, //set it true, so that user will not able to edit text
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(
+                2000), //DateTime.now() - not to allow to choose before today.
+            lastDate: DateTime(2101));
+
+        if (pickedDate != null) {
+          print(
+              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          print(
+              formattedDate); //formatted date output using intl package =>  2021-03-16
+          //you can implement different kind of Date Format here according to your requirement
+
+          // setState(() {
+          birthDateController.text =
+              formattedDate; //set output date to TextField value.
+          // });
+        } else {
+          print("Date is not selected");
+        }
+      },
     );
 
     final location = TextFormField(
@@ -81,18 +108,6 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       key: const Key('signupButton'),
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
-          // User temp = User(
-          //   id: '', 
-          //   userName: '${userNameController.text}@${userNameController.text}.com',
-          //   displayName: nameController.text,
-          //   password: passwordController.text, 
-          //   birthDate: birthDateController.text, 
-          //   location: locationController.text,
-          // )
-          // String retVal = await context.read<AuthProvider>().signUp(temp, 
-          //   "${userNameController.text}@${userNameController.text}.com",
-          //   passwordController.text
-          // );
           String retVal = await context.read<AuthProvider>().signUp(
                 "${userNameController.text}@${userNameController.text}.com",
                 passwordController.text,
@@ -118,6 +133,7 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       key: const Key('backButton'),
       onPressed: () async {
         Navigator.pop(context);
+        setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(Constants.snackBarPressed);
       },
       child: Constants.textButtonBack,
@@ -152,5 +168,12 @@ mixin InputValidationMixin {
   bool isValidEmail(String email) {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     return emailRegExp.hasMatch(email);
+  }
+
+  bool validateStructure(String value) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 }

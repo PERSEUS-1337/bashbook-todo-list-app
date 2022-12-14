@@ -93,3 +93,9 @@ Here is the table for the point equivalents for each feature
 - https://stackoverflow.com/questions/59268817/flutter-how-to-remove-a-specific-array-data-in-firebase#:~:text=Firestore%20does%20not%20provide%20a,to%20make%20the%20update%20atomic.
 - https://firebase.flutter.dev/docs/firestore/usage/
 - https://stackoverflow.com/questions/51400549/how-to-wrap-a-streambuilder-class-with-a-column-or-listview-class-in-flutter
+- https://pub.dev/packages/syncfusion_flutter_datepicker
+- https://mobikul.com/date-picker-in-flutter/#:~:text=DatePicker%20is%20a%20material%20widget,by%20calling%20flutter's%20inbuilt%20function.z
+- https://www.fluttercampus.com/guide/39/how-to-show-date-picker-on-textfield-tap-and-get-formatted-date/
+- https://devsheet.com/how-to-get-current-date-in-flutter-dart/
+- https://api.flutter.dev/flutter/intl/DateFormat-class.html
+- https://stackoverflow.com/questions/56253787/how-to-handle-textfield-validation-in-password-in-flutter

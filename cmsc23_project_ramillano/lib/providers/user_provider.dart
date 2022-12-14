@@ -11,9 +11,7 @@ class ListProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _mainUserStream;
   late Stream<QuerySnapshot> _userFriendsStream;
   late Stream<QuerySnapshot> _receivedFriendRequestsStream;
-  late Stream<QuerySnapshot> _searchedFriendStream;
   User? _selectedUser;
-  String userIdMain = "9T7x7PZaRdTyMP4DZE6SAKeCDwr2";
 
   /// It fetches the main user, all users, user friends, and received friend requests.
   ListProvider() {
@@ -22,7 +20,6 @@ class ListProvider with ChangeNotifier {
     fetchUsers();
     fetchUserFriends();
     fetchReceivedFriendRequests();
-    fetchSearchedFriend();
   }
 
   /// Getters.
@@ -31,7 +28,6 @@ class ListProvider with ChangeNotifier {
   Stream<QuerySnapshot> get userFriends => _userFriendsStream;
   Stream<QuerySnapshot> get receivedFriendRequests =>
       _receivedFriendRequestsStream;
-  Stream<QuerySnapshot> get searchedFriend => _searchedFriendStream;
   User get selected => _selectedUser!;
 
   /// FetchUsers() -&gt; fetches all users from the database
@@ -49,19 +45,13 @@ class ListProvider with ChangeNotifier {
   }
 
   fetchUserFriends() {
-    _userFriendsStream = firebaseService.getAllFriends(userIdMain);
+    _userFriendsStream = firebaseService.getAllFriends();
     notifyListeners();
   }
 
   fetchReceivedFriendRequests() {
     _receivedFriendRequestsStream =
-        firebaseService.getReceivedFriendRequests(userIdMain);
-    notifyListeners();
-  }
-
-  fetchSearchedFriend() {
-    _searchedFriendStream =
-        firebaseService.getReceivedFriendRequests(userIdMain);
+        firebaseService.getReceivedFriendRequests();
     notifyListeners();
   }
 
@@ -78,8 +68,8 @@ class ListProvider with ChangeNotifier {
   /// Args:
   ///   userId1 (String): The user who is adding the friend
   ///   userId2 (String): The userId of the user you want to add as a friend
-  addUserAsFriend(String userId1, String userId2) async {
-    await firebaseService.addUserAsFriend(userId1, userId2);
+  addUserAsFriend(String userId2) async {
+    await firebaseService.addUserAsFriend(userId2);
     notifyListeners();
   }
 
@@ -88,8 +78,8 @@ class ListProvider with ChangeNotifier {
   /// Args:
   ///   userId1 (String): The userId of the user who received the friend request.
   ///   userId2 (String): The userId of the user who sent the friend request.
-  rejectFriendRequest(String userId1, String userId2) async {
-    await firebaseService.rejectFriendRequest(userId1, userId2);
+  rejectFriendRequest(String userId2) async {
+    await firebaseService.rejectFriendRequest(userId2);
     notifyListeners();
   }
 
@@ -98,8 +88,8 @@ class ListProvider with ChangeNotifier {
   /// Args:
   ///   userId1 (String): The userId of the user who received the friend request.
   ///   userId2 (String): The user who sent the friend request
-  acceptFriendRequest(String userId1, String userId2) async {
-    await firebaseService.acceptFriendRequest(userId1, userId2);
+  acceptFriendRequest(String userId2) async {
+    await firebaseService.acceptFriendRequest(userId2);
     notifyListeners();
   }
 
@@ -108,8 +98,8 @@ class ListProvider with ChangeNotifier {
   /// Args:
   ///   userId1 (String): The userId of the user who is removing the friend.
   ///   userId2 (String): The userId of the friend you want to remove
-  removeFriendFromUser(String userId1, String userId2) async {
-    await firebaseService.removeUserFriend(userId1, userId2);
+  removeFriendFromUser(String userId2) async {
+    await firebaseService.removeUserFriend(userId2);
     notifyListeners();
   }
 }

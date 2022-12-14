@@ -4,12 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseUserAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
-  // var currentUser = FirebaseAuth.instance.currentUser;
   final currentUser = FirebaseAuth.instance.currentUser;
 
   /// It returns a stream of the user's data.
   Stream<QuerySnapshot> getMainUser() {
-    print("uid:\t${currentUser?.email}");
+    print("email:\t${currentUser?.email}");
     // return db.collection('users').where('').snapshots();
     return db
         .collection('users')
@@ -19,7 +18,7 @@ class FirebaseUserAPI {
 
   /// It returns a stream of all the users in the database.
   Stream<QuerySnapshot> getAllUsers() {
-    print(currentUser?.uid);
+    // print(currentUser?.uid);
     return db
         .collection('users')
         .where('id', isNotEqualTo: currentUser?.uid)
@@ -30,7 +29,7 @@ class FirebaseUserAPI {
   ///
   /// Args:
   ///   /// `userId` is the unique identifier of the user.
-  Stream<QuerySnapshot> getAllFriends(String userId) {
+  Stream<QuerySnapshot> getAllFriends() {
     return db
         .collection('users')
         .where('friends', arrayContains: currentUser?.uid)
@@ -41,7 +40,7 @@ class FirebaseUserAPI {
   ///
   /// Args:
   ///   userId (String): The userId of the user who is receiving the friend request.
-  Stream<QuerySnapshot> getReceivedFriendRequests(String userId) {
+  Stream<QuerySnapshot> getReceivedFriendRequests() {
     return db
         .collection('users')
         .where('sentFriendRequest', arrayContains: currentUser?.uid)
@@ -52,7 +51,7 @@ class FirebaseUserAPI {
   ///
   /// Args:
   ///   userId (String): The userId of the user who sent the friend request.
-  Stream<QuerySnapshot> getSentFriendRequests(String userId) {
+  Stream<QuerySnapshot> getSentFriendRequests() {
     return db
         .collection('users')
         .where('receivedFriendRequests', arrayContains: currentUser?.uid)
@@ -64,7 +63,7 @@ class FirebaseUserAPI {
   /// Args:
   ///   userId1 (String): The userId of the user who is sending the friend request.
   ///   userId2 (String): The userId of the user you want to remove from your friend list.
-  Future removeUserFriend(String userId1, String userId2) async {
+  Future removeUserFriend(String userId2) async {
     await db.collection("users").doc(currentUser?.uid).update({
       "friends": FieldValue.arrayRemove([userId2])
     });
@@ -80,7 +79,7 @@ class FirebaseUserAPI {
   /// Args:
   ///   userId1 (String): The user who is sending the friend request
   ///   userId2 (String): The user that is being added as a friend
-  Future addUserAsFriend(String userId1, String userId2) async {
+  Future addUserAsFriend(String userId2) async {
     await db.collection("users").doc(currentUser?.uid).update({
       "sentFriendRequest": FieldValue.arrayUnion([userId2])
     });
@@ -95,7 +94,7 @@ class FirebaseUserAPI {
   /// Args:
   ///   userId1 (String): The userId of the user who sent the friend request.
   ///   userId2 (String): The user who sent the friend request
-  Future acceptFriendRequest(String userId1, String userId2) async {
+  Future acceptFriendRequest(String userId2) async {
     await db.collection("users").doc(currentUser?.uid).update({
       "receivedFriendRequests": FieldValue.arrayRemove([userId2]),
       "friends": FieldValue.arrayUnion([userId2])
@@ -112,15 +111,9 @@ class FirebaseUserAPI {
   /// Args:
   ///   userId1 (String): The userId of the user who received the friend request.
   ///   userId2 (String): The userId of the user who sent the friend request.
-  Future rejectFriendRequest(String userId1, String userId2) async {
+  Future rejectFriendRequest(String userId2) async {
     await db.collection("users").doc(currentUser?.uid).update({
       "receivedFriendRequests": FieldValue.arrayRemove([userId2])
-    });
-    await db.collection("users").doc(currentUser?.uid).update({
-      "receivedFriendRequests": FieldValue.arrayRemove([userId2]),
-    });
-    await db.collection("users").doc(userId2).update({
-      "sentFriendRequest": FieldValue.arrayRemove([currentUser?.uid]),
     });
     await db.collection("users").doc(userId2).update({
       "sentFriendRequest": FieldValue.arrayRemove([currentUser?.uid])

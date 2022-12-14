@@ -15,7 +15,7 @@ class AuthProvider with ChangeNotifier {
     authService = FirebaseAuthAPI();
     authService.getUser().listen((User? newUser) {
       userObj = newUser;
-      print('AuthProvider - FirebaseAuth - onAuthStateChanged - $newUser');
+      // print('AuthProvider - FirebaseAuth - onAuthStateChanged - $newUser');
 
       /// A function that is called when the userObj variable is changed.
       /// It tells the app that the userObj variable has changed and that the app needs to rebuild the widgets that use the userObj variable.

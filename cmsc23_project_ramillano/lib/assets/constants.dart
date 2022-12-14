@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-const mainUserId = "9mxC9IiSmA5KOlwzHzeI";
+// const mainUserId = "9mxC9IiSmA5KOlwzHzeI";
+
+const sizedBoxDivider = SizedBox(height: 0);
 
 // Colors and Values
 const userNameColorAccent = Colors.lightBlueAccent;
@@ -113,6 +115,12 @@ const textStyleTeal = TextStyle(color: Colors.tealAccent, shadows: <Shadow>[
       blurRadius: neonBlurRadius,
       color: Colors.tealAccent)
 ]);
+const textStyleBlue = TextStyle(color: Colors.blueAccent, shadows: <Shadow>[
+  Shadow(
+      offset: Offset(0.0, 0.0),
+      blurRadius: neonBlurRadius,
+      color: Colors.blueAccent)
+]);
 const textStyleRed = TextStyle(color: Colors.redAccent, shadows: <Shadow>[
   Shadow(
       offset: Offset(0.0, 0.0),
@@ -143,6 +151,10 @@ const textStylePink = TextStyle(color: Colors.pinkAccent, shadows: <Shadow>[
       blurRadius: neonBlurRadius,
       color: Colors.pinkAccent)
 ]);
+const textStyleGray = TextStyle(color: Colors.grey, shadows: <Shadow>[
+  Shadow(
+      offset: Offset(0.0, 0.0), blurRadius: neonBlurRadius, color: Colors.grey)
+]);
 const textStyleBlack = TextStyle(color: Colors.black, shadows: <Shadow>[
   Shadow(
       offset: Offset(0.0, 0.0), blurRadius: neonBlurRadius, color: Colors.black)
@@ -162,21 +174,31 @@ const textAddFriend =
 const textViewFriend =
     Text(style: textStyleTeal, "\$ Press to view ./profile/friends ...");
 const textSeeFR =
-    Text(style: textStyleTeal, "\$ Press to see ./profile/friend_requests ...");
+    Text(style: textStyleTeal, "\$ Press to see ./.../friend_requests ...");
 const textSearchFriend =
     Text(style: textStyleTeal, "\$ Press to search for \${user.friend} ...");
+const textEditTodoTitle =
+    Text(style: textStyleYellow, "\$ Editing title of \${user.todo} ...");
+const textEditTodoDescription =
+    Text(style: textStyleYellow, "\$ Editing description of \${user.todo} ...");
+const textEditTodoDeadline =
+    Text(style: textStyleYellow, "\$ Editing deadline of \${user.todo} ...");
 
+const textButtonStatus = Text(style: textStyleGreen, ">>> Toggle Status");
 const textButtonEdit = Text(style: textStyleOrange, ">>> Edit");
 const textButtonRemove = Text(style: textStyleRed, ">>> Remove");
 const textButtonAccept = Text(style: textStyleGreen, ">>> Accept");
-const textButtonAdd = Text(style: textStyleOrange, ">>> Add friend");
+const testButtonAddFriend = Text(style: textStyleOrange, ">>> Add friend");
+const textButtonAdd = Text(style: textStyleGreen, ">>> Add");
 const textButtonLogin = Text(style: textStyleRed, ">>> Login");
 const textButtonLogout =
     Text(textScaleFactor: 1.5, style: textStyleRed, ">>> Logout");
 const textButtonSignUp = Text(style: textStyleGreen, ">>> Sign Up");
 const textButtonBack = Text(style: textStyleRed, ">>> Back");
-const textButtonTodo = Text(textScaleFactor: 1.5, style: textStylePink, ">>> TodoList");
-const textButtonUserProfile = Text(textScaleFactor: 1.5, style: textStylePink, ">>> UserProfile");
+const textButtonTodo =
+    Text(textScaleFactor: 1.5, style: textStylePink, ">>> TodoList");
+const textButtonUserProfile =
+    Text(textScaleFactor: 1.5, style: textStylePink, ">>> UserProfile");
 
 const textFormEmail =
     InputDecoration(hintText: "Email", hintStyle: textStyleWhite);
@@ -188,12 +210,18 @@ const textFormLastName =
     InputDecoration(hintText: "Last Name", hintStyle: textStyleWhite);
 const textFormName =
     InputDecoration(hintText: "Name", hintStyle: textStyleWhite);
-const textFormBirthDate =
-    InputDecoration(hintText: "Birth Date", hintStyle: textStyleWhite);
+const textFormBirthDate = InputDecoration(
+    hintText: "Tap to add Birth Date", hintStyle: textStyleWhite);
 const textFormLocation =
     InputDecoration(hintText: "Location", hintStyle: textStyleWhite);
 const textFormUserName =
     InputDecoration(hintText: "User Name", hintStyle: textStyleWhite);
+const textFormTodoTitle =
+    InputDecoration(hintText: "Todo Title", hintStyle: textStyleWhite);
+const textFormTodoDesc =
+    InputDecoration(hintText: "Todo Description", hintStyle: textStyleWhite);
+const textFormTodoDeadline =
+    InputDecoration(hintText: "Tap to add Deadline", hintStyle: textStyleWhite);
 
 // StreamBuilder errors
 const snapshotWaiting = Center(child: CircularProgressIndicator());

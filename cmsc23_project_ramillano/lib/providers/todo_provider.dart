@@ -44,25 +44,31 @@ class TodoListProvider with ChangeNotifier {
 
   void addTodo(Todo item) async {
     String message = await firebaseService.addTodo(item.toJson(item));
-    print(message);
+    print("Add: $message");
     notifyListeners();
   }
 
-  void editTodo(String newTitle) async {
-    String message = await firebaseService.editTodo(_selectedTodo!.id, newTitle);
-    print("Edit");
+  void editTodo(String newTitle, String newDesc, String newDeadline, String formattedDate) async {
+    String message = await firebaseService.editTodo(_selectedTodo!.id, newTitle, newDesc, newDeadline, formattedDate);
+    print("Edit: $message");
     notifyListeners();
   }
 
   void deleteTodo() async {
     String message = await firebaseService.deleteTodo(_selectedTodo!.id);
-    print(message);
+    print("Delete: $message");
     notifyListeners();
   }
 
-  void toggleStatus(int index, bool status) {
-    // _todoList[index].completed = status;
-    print("Toggle Status");
+  // void toggleStatus(int index, bool status) {
+  //   // _todoList[index].completed = status;
+  //   print("Toggle Status");
+  //   notifyListeners();
+  // }
+
+  Future<void> toggleTodo() async {
+    String message = await firebaseService.toggleTodo(_selectedTodo!.id, _selectedTodo!.completed);
+    print("Toggled: $message");
     notifyListeners();
   }
 }

@@ -1,6 +1,8 @@
 // import 'package:exercise7_ramillano/providers/auth_provider.dart';
 // import 'package:exercise7_ramillano/screens/signup.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
+import 'package:cmsc23_project_ramillano/providers/user_provider.dart';
 import 'package:cmsc23_project_ramillano/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc23_project_ramillano/assets/constants.dart' as Constants;
@@ -26,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       controller: emailController,
       style: Constants.textStyleWhite,
       decoration: Constants.textFormUserName,
-       validator: ((emailController) {
+      validator: ((emailController) {
         if (emailController!.isEmpty) return "This field is required.";
         return null;
       }),
@@ -48,22 +50,19 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
     final loginButton = TextButton(
       key: const Key('loginButton'),
       onPressed: () async {
-        
         if (_formKey.currentState!.validate()) {
-            String retVal = await context.read<AuthProvider>().signIn(
-                // emailController.text,
-                "${emailController.text}@${emailController.text}.com",
-                passwordController.text);
-            // ignore: use_build_context_synchronously
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(retVal),
-            ));
-            setState(() {});
-          }
+          String retVal = await context.read<AuthProvider>().signIn(
+              // emailController.text,
+              "${emailController.text}@${emailController.text}.com",
+              passwordController.text);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(retVal),
+          ));
+          setState(() {});
+        }
         // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context)
-            .showSnackBar(Constants.snackBarPressed);
-          
+        ScaffoldMessenger.of(context).showSnackBar(Constants.snackBarPressed);
       },
       child: Constants.textButtonLogin,
     );
@@ -71,13 +70,12 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
     final signUpButton = TextButton(
       key: const Key('signUpButton'),
       onPressed: () async {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const SignupPage(),
-          ),
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignupPage()),
         );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(Constants.snackBarPressed);
+        setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(Constants.snackBarPressed);
       },
       child: Constants.textButtonSignUp,
     );

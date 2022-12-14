@@ -1,9 +1,3 @@
-/*
-  Created by: Claizel Coubeili Cepe
-  Date: 27 October 2022
-  Description: Sample todo app with networking
-*/
-
 import 'package:cmsc23_project_ramillano/models/todo_model.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
 import 'package:cmsc23_project_ramillano/providers/todo_provider.dart';
@@ -23,26 +17,52 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  Widget _buildDetails(BuildContext context, Todo todo) {
+  Widget _buildDetails(BuildContext context, Todo todo, String type) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(style: Constants.textStyleWhite, "\$ todo > ${todo.title};"),
-        // Text(style: Constants.textStyleUserName, "\$ todoId > ${todo.id};"),
+        const Divider(
+          color: Colors.white,
+          thickness: 2.00,
+        ),
+        Text(style: Constants.textStyleWhite, "\$ todoTitle > ${todo.title};"),
+        Constants.sizedBoxDivider,
+        Text(
+            style: Constants.textStyleWhite,
+            "\$ todoDesc > ${todo.description};"),
+        Constants.sizedBoxDivider,
+        Text(
+            style: Constants.textStyleRed,
+            "\$ todoDeadline > ${todo.deadline};"),
+        Constants.sizedBoxDivider,
+        Text(
+            style: Constants.textStyleGreen,
+            "\$ todoCompleted > ${todo.completed};"),
+        Constants.sizedBoxDivider,
         Text(
             style: Constants.textStyleUserName,
-            "\$ todoUserId > ${todo.userId};"),
-        _buildButtons(context, todo)
+            "\$ todoOwner > ${todo.userEmail};"),
+        Constants.sizedBoxDivider,
+        Text(
+            style: Constants.textStyleOrange,
+            "\$ lastEditBy > ${todo.lastEditBy};"),
+        Constants.sizedBoxDivider,
+        Text(
+            style: Constants.textStyleOrange,
+            "\$ lastEditTimeStamp > ${todo.lastEditTimeStamp};"),
+        _buildButtons(context, todo, type)
       ],
     );
   }
 
-  Widget _buildButtons(BuildContext context, Todo todo) {
+  Widget _buildButtons(BuildContext context, Todo todo, String type) {
     return Row(
       children: [
         TextButton(
-            onPressed: () {
+          onPressed: () {
+            if (type == 'user') {
               context.read<TodoListProvider>().changeSelectedTodo(todo);
               context.read<TodoListProvider>().deleteTodo();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -52,26 +72,64 @@ class _TodoPageState extends State<TodoPage> {
                     style: Constants.textStyleBlack,
                     'todo: ${todo.title}; deleted ... '),
               ));
-            },
-            child: Constants.textButtonRemove),
-        TextButton(
-            onPressed: () {
-              context.read<TodoListProvider>().changeSelectedTodo(todo);
-              showDialog(
-                context: context,
-                builder: (BuildContext context) => TodoModal(
-                  type: 'Edit',
-                ),
-              );
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.white,
                 duration: const Duration(seconds: 1),
                 content: Text(
                     style: Constants.textStyleBlack,
-                    'todo: ${todo.title}; edited ... '),
+                    'cannot delete: ${todo.title}; not an owner of todo ... '),
               ));
-            },
-            child: Constants.textButtonEdit),
+            }
+          },
+          child: Constants.textButtonRemove,
+        ),
+        TextButton(
+          onPressed: () {
+            context.read<TodoListProvider>().changeSelectedTodo(todo);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => TodoModal(
+                type: 'Edit',
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.white,
+              duration: const Duration(seconds: 1),
+              content: Text(
+                  style: Constants.textStyleBlack,
+                  'todo: ${todo.title}; edited ... '),
+            ));
+          },
+          child: Constants.textButtonEdit,
+        ),
+
+        /// A button that toggles the todo.
+        TextButton(
+          onPressed: () {
+            /// Checking if the user is the owner of the todo.
+            if (type == 'user') {
+              context.read<TodoListProvider>().changeSelectedTodo(todo);
+              context.read<TodoListProvider>().toggleTodo();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.white,
+                duration: const Duration(seconds: 1),
+                content: Text(
+                    style: Constants.textStyleBlack,
+                    'todo: ${todo.title}; toggled ... '),
+              ));
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.white,
+                duration: const Duration(seconds: 1),
+                content: Text(
+                    style: Constants.textStyleBlack,
+                    'cannot toggle: ${todo.title}; not an owner of todo ... '),
+              ));
+            }
+          },
+          child: Constants.textButtonStatus,
+        ),
       ],
     );
   }
@@ -92,23 +150,16 @@ class _TodoPageState extends State<TodoPage> {
             title: Constants.textButtonUserProfile,
             onTap: () {
               Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MainPage()),
-              );
               setState(() {});
+              Navigator.pop(context);
             },
           ),
           ListTile(
             title: Constants.textButtonLogout,
             onTap: () {
+              Navigator.pop(context);
               context.read<AuthProvider>().signOut();
               Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
               setState(() {});
             },
           ),
@@ -117,8 +168,8 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  Widget _todosStreamBuild(
-      BuildContext context, Stream<QuerySnapshot<Object?>> todosStream) {
+  Widget _todosStreamBuild(BuildContext context,
+      Stream<QuerySnapshot<Object?>> todosStream, String type) {
     return StreamBuilder(
       stream: todosStream,
       builder: (context, snapshot) {
@@ -143,49 +194,11 @@ class _TodoPageState extends State<TodoPage> {
                   width: double.infinity,
                   alignment: Alignment.topLeft,
                   padding: const EdgeInsets.only(
-                      left: 40, right: 40, top: 5, bottom: 5),
+                      left: 10, right: 10, top: 5, bottom: 5),
                   // child: Text(
                   //     style: Constants.textStyleWhite,
                   //     "\$ todo -> ${todo.title};")),
-                  child: _buildDetails(context, todo)),
-            );
-          }),
-        );
-      },
-    );
-  }
-
-  Widget _userTodosStream(
-      BuildContext context, Stream<QuerySnapshot<Object?>> userTodosStream) {
-    return StreamBuilder(
-      stream: userTodosStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Constants.snapshotError;
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Constants.snapshotWaiting;
-        } else if (!snapshot.hasData) {
-          return Constants.snapshotNoData;
-        }
-
-        return ListView.builder(
-          itemCount: snapshot.data?.docs.length,
-          itemBuilder: ((context, index) {
-            Todo todo = Todo.fromJson(
-                snapshot.data?.docs[index].data() as Map<String, dynamic>);
-            return InkWell(
-              splashColor: Constants.splashColor,
-              hoverColor: Constants.hoverColor,
-              onTap: () {},
-              child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.only(
-                      left: 40, right: 40, top: 5, bottom: 5),
-                  // child: Text(
-                  //     style: Constants.textStyleWhite,
-                  //     "\$ todo -> ${todo.title};")),
-                  child: _buildDetails(context, todo)),
+                  child: _buildDetails(context, todo, type)),
             );
           }),
         );
@@ -198,7 +211,6 @@ class _TodoPageState extends State<TodoPage> {
     // access the list of todos in the provider
     Stream<QuerySnapshot> friendsTodosStream =
         context.watch<TodoListProvider>().friendsTodos;
-    Stream<QuerySnapshot> todosStream = context.watch<TodoListProvider>().todos;
     Stream<QuerySnapshot> userTodosStream =
         context.watch<TodoListProvider>().userTodos;
 
@@ -209,17 +221,22 @@ class _TodoPageState extends State<TodoPage> {
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Constants.textTodosUser,
-            Flexible(child: _userTodosStream(context, userTodosStream)),
+            Flexible(
+                child: _todosStreamBuild(context, userTodosStream, 'user')),
             Constants.textTodosAll,
-            Flexible(child: _todosStreamBuild(context, friendsTodosStream))
+            Flexible(
+                child:
+                    _todosStreamBuild(context, friendsTodosStream, 'friends'))
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
         onPressed: () {
           showDialog(
             context: context,
@@ -228,7 +245,10 @@ class _TodoPageState extends State<TodoPage> {
             ),
           );
         },
-        child: const Icon(Icons.add_outlined),
+        child: const Icon(
+          Icons.add_outlined,
+          color: Colors.black,
+        ),
       ),
     );
   }
