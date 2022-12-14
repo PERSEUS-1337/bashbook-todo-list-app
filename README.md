@@ -70,16 +70,16 @@ Here is the table for the point equivalents for each feature
 
 ## Screenshots
 
-<img src="../screenshots/login.png">
-<img src="../screenshots/signup.png">
-<img src="../screenshots/homepage.png">
-<img src="../screenshots/users.png">
-<img src="../screenshots/friends.png">
-<img src="../screenshots/friendrequest.png">
-<img src="../screenshots/drawer.png">
-<img src="../screenshots/todopage.png">
-<img src="../screenshots/todoedit.png">
-<img src="../screenshots/todoadd.png">
+<img src="./screenshots/login.png">
+<img src="./screenshots/signup.png">
+<img src="./screenshots/homepage.png">
+<img src="./screenshots/users.png">
+<img src="./screenshots/friends.png">
+<img src="./screenshots/friendrequest.png">
+<img src="./screenshots/drawer.png">
+<img src="./screenshots/todopage.png">
+<img src="./screenshots/todoedit.png">
+<img src="./screenshots/todoadd.png">
 
 ## Things you did in code (logic , solutions)
 The first thing I thought of was trying to make my app look good without too much effort. This is where the terminal-based design came in because, I was also spending much of my time staring at terminals because of CMSC 124 and CMSC 125 and especially in Linux, that it felt right to use that kind of design and, it worked out great. It looked really good and simple.
