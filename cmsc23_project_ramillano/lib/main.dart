@@ -4,11 +4,10 @@ import 'package:cmsc23_project_ramillano/providers/todo_provider.dart';
 import 'package:cmsc23_project_ramillano/providers/user_provider.dart';
 import 'package:cmsc23_project_ramillano/screens/login.dart';
 import 'package:cmsc23_project_ramillano/screens/main_page.dart';
-import 'package:cmsc23_project_ramillano/screens/todo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cmsc23_project_ramillano/assets/constants.dart' as Constants;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

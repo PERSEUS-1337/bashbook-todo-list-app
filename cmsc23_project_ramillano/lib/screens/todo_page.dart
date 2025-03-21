@@ -1,8 +1,6 @@
 import 'package:cmsc23_project_ramillano/models/todo_model.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
 import 'package:cmsc23_project_ramillano/providers/todo_provider.dart';
-import 'package:cmsc23_project_ramillano/screens/login.dart';
-import 'package:cmsc23_project_ramillano/screens/main_page.dart';
 import 'package:cmsc23_project_ramillano/screens/modal_todo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
-import 'package:cmsc23_project_ramillano/screens/login.dart';
 import 'package:cmsc23_project_ramillano/screens/modal_show_list.dart';
 import 'package:cmsc23_project_ramillano/screens/todo_page.dart';
 import 'package:flutter/material.dart';

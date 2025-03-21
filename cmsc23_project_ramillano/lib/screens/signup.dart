@@ -1,4 +1,3 @@
-import 'package:cmsc23_project_ramillano/models/user_model.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,8 +39,9 @@ class _SignupPageState extends State<SignupPage> with InputValidationMixin {
       style: Constants.textStyleWhite,
       decoration: Constants.textFormPassword,
       validator: ((passwordController) {
-        if (!validateStructure(passwordController!))
+        if (!validateStructure(passwordController!)) {
           return "Password is weak. Try a new one";
+        }
         return null;
       }),
     );

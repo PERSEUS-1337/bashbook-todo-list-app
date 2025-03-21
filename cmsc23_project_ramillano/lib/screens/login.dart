@@ -1,10 +1,9 @@
 // import 'package:exercise7_ramillano/providers/auth_provider.dart';
 // import 'package:exercise7_ramillano/screens/signup.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project_ramillano/providers/auth_provider.dart';
-import 'package:cmsc23_project_ramillano/providers/user_provider.dart';
 import 'package:cmsc23_project_ramillano/screens/signup.dart';
 import 'package:flutter/material.dart';
+// ignore: library_prefixes
 import 'package:cmsc23_project_ramillano/assets/constants.dart' as Constants;
 import 'package:provider/provider.dart';
 

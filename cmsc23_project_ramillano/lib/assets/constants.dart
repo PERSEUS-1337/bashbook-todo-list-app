@@ -192,13 +192,13 @@ const testButtonAddFriend = Text(style: textStyleOrange, ">>> Add friend");
 const textButtonAdd = Text(style: textStyleGreen, ">>> Add");
 const textButtonLogin = Text(style: textStyleRed, ">>> Login");
 const textButtonLogout =
-    Text(textScaleFactor: 1.5, style: textStyleRed, ">>> Logout");
+    Text(textScaler: TextScaler.linear(1.5), style: textStyleRed, ">>> Logout");
 const textButtonSignUp = Text(style: textStyleGreen, ">>> Sign Up");
 const textButtonBack = Text(style: textStyleRed, ">>> Back");
 const textButtonTodo =
-    Text(textScaleFactor: 1.5, style: textStylePink, ">>> TodoList");
+    Text(textScaler: TextScaler.linear(1.5), style: textStylePink, ">>> TodoList");
 const textButtonUserProfile =
-    Text(textScaleFactor: 1.5, style: textStylePink, ">>> UserProfile");
+    Text(textScaler: TextScaler.linear(1.5), style: textStylePink, ">>> UserProfile");
 
 const textFormEmail =
     InputDecoration(hintText: "Email", hintStyle: textStyleWhite);
